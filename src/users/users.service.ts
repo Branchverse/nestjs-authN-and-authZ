@@ -26,6 +26,7 @@ export class UsersService {
         this.logger.warn(
           `Creating a user (email = ${createUserDto.email}) failed due to a duplicate conflict.`
         );
+        console.log(error)
         throw new ConflictException('This user email already exists');
       }
 

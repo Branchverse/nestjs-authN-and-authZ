@@ -1,10 +1,11 @@
-import { BadRequestException, InternalServerErrorException } from "@nestjs/common";
+import { BadRequestException, Injectable, InternalServerErrorException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
 import { CreateUserDto } from "../users/dto/create-user.dto";
 import { UsersService } from "../users/users.service";
 
+@Injectable()
 export class AuthService {
     constructor(
         private readonly usersService: UsersService,
@@ -22,6 +23,7 @@ export class AuthService {
             if (error?.code === '11000') {
                 throw new BadRequestException('User with that email already exists');
             }
+            console.log(error)
             throw new InternalServerErrorException('Something went wrong');
         }
     }

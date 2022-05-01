@@ -38,11 +38,11 @@ export class User {
     lastLogin: Date;
     
     @Expose({groups: ['admin']})
-    @Prop({required:true})
+    @Prop()
     createdAt: Date;
 
     @Expose({groups: ['admin']})
-    @Prop({required:true})
+    @Prop()
     updatedAt: Date;
 
     @Expose({groups: ['admin']})

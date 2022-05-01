@@ -14,13 +14,7 @@ export class AuthController {
         private readonly authService: AuthService
     ) { }
 
-    @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
-    @Post('register')
-    async register(@Body() createUserDto: CreateUserDto) {
-        return this.authService.register(createUserDto);
-    }
-
+    //TODO this might have to be cookie auth
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
     @Get()
@@ -30,13 +24,9 @@ export class AuthController {
         return user;
     }
 
-    //TODO this might have to be cookie auth
-    @ApiBearerAuth()
-    @UseGuards(JwtAuthGuard)
-    @Post('logout')
-    async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
-        response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
-        return response.sendStatus(200);
+    @Post('register')
+    async register(@Body() createUserDto: CreateUserDto) {
+        return this.authService.register(createUserDto);
     }
 
     @HttpCode(200)
@@ -48,5 +38,14 @@ export class AuthController {
         response.setHeader('Set-Cookie', cookie);
         user.password = undefined;
         return response.send(user);
+    }
+
+    //TODO this might have to be cookie auth
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    @Post('logout')
+    async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
+        response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
+        return response.sendStatus(200);
     }
 }
