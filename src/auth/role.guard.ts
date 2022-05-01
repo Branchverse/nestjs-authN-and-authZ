@@ -1,5 +1,6 @@
 import { CanActivate, ExecutionContext, mixin, Type } from '@nestjs/common';
 import { Roles } from '../shared/enums/roles';
+import { RequestWithUser } from './interfaces/requestWithUser.interface';
  
 const RoleGuard = (role: Roles): Type<CanActivate> => {
   class RoleGuardMixin implements CanActivate {
@@ -7,7 +8,7 @@ const RoleGuard = (role: Roles): Type<CanActivate> => {
       const request = context.switchToHttp().getRequest<RequestWithUser>();
       const user = request.user;
  
-      return user?.roles.includes(role);
+      return user?.role.includes(role);
     }
   }
  

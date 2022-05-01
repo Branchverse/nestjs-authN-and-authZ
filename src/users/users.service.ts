@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -15,6 +15,7 @@ export class UsersService {
   async create(createUserDto: CreateUserDto) {
     try {
       const user = await this.userModel.create(createUserDto);
+      //TODO: check if removal is needed
       user.password = undefined
       this.logger.debug(
         `The user (id = ${user._id}) has been created successfully.`
@@ -37,7 +38,31 @@ export class UsersService {
     }
   }
 
+  async getById(id: string) {
+    const user = await this.userModel.findById(id);
+    if (user) {
+      //TODO: check if removal is needed
+      user.password = undefined;
+      return user;
+    }
+    throw new NotFoundException('User with this id does not exist');
+  }
+
   async getByEmail(email: string) {
     return this.userModel.findOne({ email });
+  }
+
+  async findAll() {
+    return await this.userModel.find();
+  }
+
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const user = await this.userModel.findByIdAndUpdate(id, updateUserDto)
+    return user
+  }
+
+  async remove(id: string) {
+    const user = await this.userModel.findByIdAndUpdate(id, {deleted: true, deletedAt: Date.now})
+    return user
   }
 }

@@ -38,6 +38,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "cookie-parser": "^1.4.6",
+    "joi": "^17.6.0",
     "mongoose": "^6.3.1",
     "passport": "^0.5.2",
     "passport-http": "^0.3.0",
