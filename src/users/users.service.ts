@@ -22,11 +22,10 @@ export class UsersService {
       );
       return user.toObject() as UserDocument;
     } catch (error) {
-      if (error.code == '11000') {
+      if (error?.code === 11000) {
         this.logger.warn(
           `Creating a user (email = ${createUserDto.email}) failed due to a duplicate conflict.`
         );
-        console.log(error)
         throw new ConflictException('This user email already exists');
       }
 

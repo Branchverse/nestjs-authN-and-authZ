@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, InternalServerErrorException } from "@nestjs/common";
+import { BadRequestException, Injectable, InternalServerErrorException, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
@@ -7,6 +7,7 @@ import { UsersService } from "../users/users.service";
 
 @Injectable()
 export class AuthService {
+    private readonly logger = new Logger(AuthService.name);
     constructor(
         private readonly usersService: UsersService,
         private readonly jwtService: JwtService,
@@ -20,10 +21,15 @@ export class AuthService {
             createdUser.password = undefined;
             return createdUser;
         } catch (error) {
-            if (error?.code === '11000') {
-                throw new BadRequestException('User with that email already exists');
+            //TODO: check what a best practice response is
+            if (error?.status === 409) {
+                this.logger.error(`A duplicate error occured while registering a new user: (${error})`);
+                throw new BadRequestException('User credentials already exist');
             }
             console.log(error)
+             /* istanbul ignore next */
+            this.logger.error(`An error occured while registering a new user: (${error})`);
+             /* istanbul ignore next */
             throw new InternalServerErrorException('Something went wrong');
         }
     }
