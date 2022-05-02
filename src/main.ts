@@ -1,10 +1,11 @@
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
+  const logger = new Logger('Swagger')
   const app = await NestFactory.create(AppModule);
   
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
@@ -13,16 +14,19 @@ async function bootstrap() {
 
   // Swagger
   const config = new DocumentBuilder()
-    .setTitle('Dolby-Backend')
-    .setDescription('Dolby-Backend for admins and artists')
+    .setTitle('Auth Backend')
+    .setDescription('User management backend')
     .setVersion('0.1')
     .addTag('users')
     .addTag('auth')
     .addBearerAuth()
+    .addCookieAuth('Authentication')
+    .addBasicAuth()
     .build()
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('swagger', app, document)
   
   await app.listen(process.env.PORT || 3001);
+  logger.log("http://localhost:" + (process.env.PORT || 3001) + "/swagger")
 }
 bootstrap();
