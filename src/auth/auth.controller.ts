@@ -1,8 +1,9 @@
 import { Body, ClassSerializerInterceptor, Controller, Get, HttpCode, HttpStatus, Post, Req, Res, SerializeOptions, UseGuards, UseInterceptors } from '@nestjs/common';
-import { ApiBearerAuth, ApiCookieAuth, ApiHeader, ApiHeaders, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBasicAuth, ApiBearerAuth, ApiBody, ApiCookieAuth, ApiHeader, ApiHeaders, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { plainToInstance } from 'class-transformer';
 import { Response } from 'express';
 import { CreateUserDto } from '../users/dto/create-user.dto';
+import { LoginUserDto } from '../users/dto/login-user.dto';
 import { User } from '../users/entities/user.entity';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwtAuth.guard';
@@ -40,9 +41,10 @@ export class AuthController {
     @Post('login')
     @ApiResponse({ status: HttpStatus.OK, description: 'User logged in', type: User})
     @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Credentials' })
-    async logIn(@Req() request: RequestWithUser, @Res() response: Response) {
-        console.log('controller');
+    @ApiBody({ type: LoginUserDto })
+    async logIn(@Req() request: RequestWithUser, @Res() response: Response, @Body() loginUserDto: LoginUserDto) {
         const { user } = request;
+        console.log('Controller(login) ',user)
         const cookie = this.authService.getCookieWithJwtToken(user._id.toString());
         response.setHeader('Set-Cookie', cookie);
         return response.send(plainToInstance(User, user));
