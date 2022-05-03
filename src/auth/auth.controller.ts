@@ -41,11 +41,11 @@ export class AuthController {
     @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Credentials' })
     @Post('login')
     async logIn(@Req() request: RequestWithUser, @Res() response: Response, @Body() loginUserDto: LoginUserDto) {
-        const { user } = request;
+        const user = plainToInstance(User,request.user)
         const cookie = this.authService.getCookieWithJwtToken(user._id.toString());
         response.setHeader('Set-Cookie', cookie);
         //TODO currently sends pw too!!!
-        return response.send(plainToInstance(User, user));
+        return response.send(user);
     }
 
     @ApiResponse({ status: HttpStatus.OK, description: 'User logged out' })

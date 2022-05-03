@@ -39,7 +39,7 @@ export class UsersService {
   }
 
   async getById(id: string) {
-    const user = await this.userModel.findById(id);
+    const user = await this.userModel.findById(id).lean();
     if (user) {
       //TODO: check if removal is needed
       user.password = undefined;
@@ -49,20 +49,20 @@ export class UsersService {
   }
 
   async getByEmail(email: string) {
-    return this.userModel.findOne({ email });
+    return this.userModel.findOne({ email }).lean();
   }
 
   async findAll() {
-    return await this.userModel.find();
+    return await this.userModel.find().lean();
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    const user = await this.userModel.findByIdAndUpdate(id, updateUserDto)
+    const user = await this.userModel.findByIdAndUpdate(id, updateUserDto).lean()
     return user
   }
 
   async remove(id: string) {
-    const user = await this.userModel.findByIdAndUpdate(id, {deleted: true, deletedAt: Date.now})
+    const user = await this.userModel.findByIdAndUpdate(id, {deleted: true, deletedAt: Date.now()}).lean()
     return user
   }
 }
