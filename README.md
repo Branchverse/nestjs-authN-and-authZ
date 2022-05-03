@@ -1,32 +1,30 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# AuthN/AuthZ/RoleGuards
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Summary: This is a repository with a basic user management system using cookies/jwtGuard/localGuard/Public-routers etc.
+---
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Structure
 
-## Description
+- [Auth Module](src/auth/)
+  - Contains all endpoints needed to register/login and logout a user.
+- [User Module](src/users/)
+  - Contains endpoints to manipulate user data.
+  - The Role guard prevents any non admin to use these endpoints.
+## Guards
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
+- [JwtAuthGuard](src/auth/strategies/jwt.strategy.js): 
+  - Is set globally in [app.module](src/app.module.ts), to overwrite the [@Public()](src/auth/guards/public.guard.ts) Decorator is used.
+  - On login `cookie` with jwt based on `secretKey(.env)` and user data is created.
+  - On Guarded requests, checks database if user with id provided by the token exists in database and authorizes request.
+  - On logout `cookie` with jwt token is replaced with an empty cookie.
+- [OptionalJwtAuthGuard](src/auth/guards/optionalJwtAuth.guard.ts)
+  - Gives the possibility to add the user to the request if it exists but also allows non users
+- [LocalAuthGuard](src/auth/guards/localAuth.guard.ts)
+  - Guard used on login where no jwt is present, can be adjusted but uses email and password 
+- [PublicGuard](src/auth/guards/localAuth.guard.ts)
+  - If used revokes the global `JwtAuthGuard`, if other Guards are used with `@UseGuards()` unless they also have `canActivate` overriden, will apply
+- [RoleGuard]()
+  - `TODO: IMPLEMENT`
 
 ```bash
 $ npm install
@@ -62,7 +60,7 @@ $ npm run test:cov
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
+## About Nestjs
 
 - Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
 - Website - [https://nestjs.com](https://nestjs.com/)
