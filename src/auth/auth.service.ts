@@ -26,7 +26,6 @@ export class AuthService {
                 this.logger.error(`A duplicate error occured while registering a new user: (${error})`);
                 throw new BadRequestException('User credentials already exist');
             }
-            console.log(error)
              /* istanbul ignore next */
             this.logger.error(`An error occured while registering a new user: (${error})`);
              /* istanbul ignore next */
