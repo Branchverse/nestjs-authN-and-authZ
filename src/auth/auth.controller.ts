@@ -6,8 +6,8 @@ import { CreateUserDto } from '../users/dto/create-user.dto';
 import { User } from '../users/entities/user.entity';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/login-user.dto';
-import { LocalAuthGuard } from './guards/localAuth.guard';
-import { Public } from './guards/public.guard';
+import  LocalAuthGuard  from './guards/localAuth.guard';
+import  Public  from './guards/public.guard';
 import { RequestWithUser } from './interfaces/requestWithUser.interface';
 
 @ApiTags('auth')

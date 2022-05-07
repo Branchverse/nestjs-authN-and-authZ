@@ -1,10 +1,8 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { APP_GUARD, NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
-import { AuthGuard } from '@nestjs/passport';
-import { JwtAuthGuard } from './auth/guards/jwtAuth.guard';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const logger = new Logger('Swagger')

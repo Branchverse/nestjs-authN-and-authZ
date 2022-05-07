@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Expose, Transform } from 'class-transformer';
 import { Document, ObjectId } from 'mongoose';
-import { Roles } from '../../shared/enums/roles';
+import { Role } from '../../shared/enums/role';
 
 @Schema({timestamps: true, _id:true})
 export class User {
@@ -30,8 +30,8 @@ export class User {
     lastName: string;
 
     @Expose()
-    @Prop({required:true, default: Roles.UNASSIGNED})
-    role: Roles;
+    @Prop({required:true, default: Role.UNASSIGNED})
+    role: Role;
 
     @Expose({groups: ['admin']})
     @Prop({required:true, default: Date.now})

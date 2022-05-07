@@ -1,7 +1,7 @@
 import { ApiParam, ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, Length } from "class-validator";
-import { Roles } from "../../shared/enums/roles";
+import { Role } from "../../shared/enums/role";
 
 export class CreateUserDto {
     @IsString()
@@ -46,10 +46,10 @@ export class CreateUserDto {
     lastName: string;
 
     @IsOptional()
-    @IsEnum(Roles)
+    @IsEnum(Role)
     @ApiProperty({
         description: "The role of the created user",
-        default: Roles.UNASSIGNED
+        default: Role.UNASSIGNED
     })
-    role: Roles;
+    role: Role;
 }

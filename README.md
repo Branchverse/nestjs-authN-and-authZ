@@ -23,8 +23,8 @@ Summary: This is a repository with a basic user management system using cookies/
   - Guard used on login where no jwt is present, can be adjusted but uses email and password 
 - [PublicGuard](src/auth/guards/localAuth.guard.ts)
   - If used revokes the global `JwtAuthGuard`, if other Guards are used with `@UseGuards()` unless they also have `canActivate` overriden, will apply
-- [RoleGuard]()
-  - `TODO: IMPLEMENT`
+- [RoleGuard](src/auth/guards/role.guard.ts)
+  - Can be used to allow endpoints for only certain roles.
 
 ```bash
 $ npm install
