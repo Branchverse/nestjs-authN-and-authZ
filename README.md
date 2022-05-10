@@ -1,6 +1,6 @@
 # AuthN/AuthZ/RoleGuards
 
-Summary: This is a repository with a basic user management system using cookies/jwtGuard/localGuard/Public-routers etc.
+This is a repository with a basic user management system using cookies/jwtGuard/localGuard/Public-routers etc.
 ---
 
 ## Structure
