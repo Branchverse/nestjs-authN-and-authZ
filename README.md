@@ -14,7 +14,7 @@ This is a repository with a basic user management system using cookies/jwtGuard/
 ## Guards
 
 - [JwtAuthGuard](src/auth/strategies/jwt.strategy.js): 
-  - Is set globally in [app.module](src/app.module.ts), to overwrite the [@Public()](src/auth/guards/public.guard.ts) Decorator is used.
+  - Is set globally in [app.module](src/app.module.ts), to overwrite this, use the [@Public()](src/auth/guards/public.guard.ts) Decorator.
   - On login `cookie` with jwt based on `secretKey(.env)` and user data is created.
   - On Guarded requests, checks database if user with id provided by the token exists in database and authorizes request.
   - On logout `cookie` with jwt token is replaced with an empty cookie.
