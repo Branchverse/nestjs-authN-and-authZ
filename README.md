@@ -9,8 +9,8 @@ This is a repository with a basic user management system using cookies/jwtGuard/
   - Contains all endpoints needed to register/login and logout a user.
   - `TODO: Refresh Token`
 - [User Module](src/users/)
-  - Contains endpoints to manipulate user data.
-  - `TODO` The Role guard prevents any non admin to use these endpoints.
+  - Contains endpoints for CRUD on users.
+  - The Role guard allows only the passed Role.`
 ## Guards
 
 - [JwtAuthGuard](src/auth/strategies/jwt.strategy.js): 
