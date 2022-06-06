@@ -39,6 +39,7 @@ export class AuthService {
             await this.verifyPassword(plainTextPassword, user.password);
             return user;
         } catch (error) {
+            this.logger.error(`Could not authenticate user: (${error})`);
             throw new BadRequestException('Wrong credentials provided');
         }
     }

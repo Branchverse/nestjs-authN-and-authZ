@@ -48,6 +48,7 @@ export class AuthController {
         return response.send(user);
     }
 
+    @Public()
     @ApiResponse({ status: HttpStatus.OK, description: 'User logged out' })
     @Post('logout')
     async logOut(@Req() request: RequestWithUser, @Res() response: Response) {

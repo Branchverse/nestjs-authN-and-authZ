@@ -11,7 +11,7 @@ const RoleGuard = (role: Role): Type<CanActivate> => {
             const request = context.switchToHttp().getRequest<RequestWithUser>();
             const user = request.user;
 
-            return user?.role.includes(role);
+            return user?.role === role //? true : user?.role === Role.ADMIN ? true : false;
         }
     }
 

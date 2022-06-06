@@ -27,34 +27,65 @@ This is a repository with a basic user management system using cookies/jwtGuard/
 - [RoleGuard](src/auth/guards/role.guard.ts)
   - Can be used to allow endpoints for only certain roles.
 
-```bash
-$ npm install
+## Basic User Schema
+[User](./src/users/entities/user.entity.ts):
+```js
+{
+  _id: ObjectId,
+  username: string, password: string, email: string,
+  firstName: string, lastName: string,
+  role: Role,
+  lastLogin: Date, createdAt: Date, updatedAt: Date, 
+  deletedAt: Date, deleted: boolean
+}
 ```
+## NestJs features used
+- [Swagger](https://docs.nestjs.com/openapi/introduction)
+- [ClassSerializer](https://docs.nestjs.com/techniques/serialization)
+- [ConfigService](https://docs.nestjs.com/techniques/configuration)
+- [class-validator](https://docs.nestjs.com/pipes#class-validator)
+- [mongoose](https://docs.nestjs.com/recipes/mongodb#mongodb-mongoose)
 
-## Running the app
+## Running the app with docker
+
+Note that I use MongoDB Atlas and not an DB Image (might come later)
+
+Also a .env file is needed, here an [example](./.sample.env)
 
 ```bash
+# development (~600MB)
+docker-compose -f docker-compose.dev.yml up
+
+# production (~300MB)
+docker-compose -f docker-compose.prod.yml up
+```
+## Running the app dockerless
+
+```bash
+# setup
+npm i
+
 # development
-$ npm run start
+npm run start
 
 # watch mode
-$ npm run start:dev
+npm run start:dev
 
 # production mode
-$ npm run start:prod
+npm run start:prod
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
+npm run test
 
 # e2e tests
-$ npm run test:e2e
+npm run test:e2e
 
 # test coverage
-$ npm run test:cov
+npm run test:cov
 ```
 
 ## Support

@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+    main-prod:
+        image: main-prod
+        build: 
+            context: .
+            target: prod
+        command: npm run start:prod
+        ports:
+            - 3001:3001
+        env_file:
+            - .env
+        restart: unless-stopped
