@@ -54,11 +54,11 @@ Note that I use MongoDB Atlas and not a DB Image (might come later)
 Also a .env file is needed in the root folder of the project, here an [example](./.sample.env)
 
 ```bash
-# development (~600MB)
-docker-compose -f docker-compose.dev.yml up
+# development (550MB)
+npm run docker:dev
 
-# production (~300MB)
-docker-compose -f docker-compose.prod.yml up
+# production (~250MB)
+npm run docker
 ```
 ## Running the app dockerless
 
