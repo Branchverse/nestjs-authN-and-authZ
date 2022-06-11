@@ -45,12 +45,13 @@ This is a repository with a basic user management system using cookies/jwtGuard/
 - [ConfigService](https://docs.nestjs.com/techniques/configuration)
 - [class-validator](https://docs.nestjs.com/pipes#class-validator)
 - [mongoose](https://docs.nestjs.com/recipes/mongodb#mongodb-mongoose)
+- [Rate-limiter](https://docs.nestjs.com/security/rate-limiting)
 
 ## Running the app with docker
 
-Note that I use MongoDB Atlas and not an DB Image (might come later)
+Note that I use MongoDB Atlas and not a DB Image (might come later)
 
-Also a .env file is needed, here an [example](./.sample.env)
+Also a .env file is needed in the root folder of the project, here an [example](./.sample.env)
 
 ```bash
 # development (~600MB)
