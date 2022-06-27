@@ -63,7 +63,7 @@ jobs:
           cluster: test-cluster
           count: 1
           started-by: github-actions-${{ github.actor }}
-          wait-for-finish: true
+          wait-for-finish: false
       -
         name: Log out of Amazon ECR
         if: always()
