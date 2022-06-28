@@ -59,7 +59,7 @@ jobs:
         name: Get running Task
         id: get-task
         run: |
-          echo "::set-output name=task::$(aws ecs list-tasks --cluster "test-cluster" --output text --query taskArns[0])"
+          echo "::set-output name=task::$(aws ecs list-tasks --cluster "test-cluster" --query taskArns[0])"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
