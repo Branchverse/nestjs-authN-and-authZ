@@ -61,6 +61,7 @@ jobs:
         run: |
           echo "::set-output name=task::$(aws ecs list-tasks --cluster "test-cluster" --query taskArns[0])"
           echo ${{ steps.build-image.outputs.uri }}
+          cat task-definition.json
       - 
         name: Stop running Task
         run: |
