@@ -56,6 +56,23 @@ jobs:
           container-name: test-container
           image: ${{ steps.build-image.outputs.image }}
       - 
+        name: Get running Task
+        id: get-task
+        run: |
+          echo "::set-output name=task::$(aws ecs list-tasks --cluster "test-cluster" --output text --query taskArns[0])"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-central-1'
+      - 
+        name: Stop running Task
+        run: |
+          echo "::set-output name=task::$(aws ecs stop-task --task ${{ steps.get-task.output.task }} --cluster "test-cluster")"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: 'eu-central-1'
+      - 
         name: Run Task on Amazon ECS
         uses: smitp/amazon-ecs-run-task@v1
         with:

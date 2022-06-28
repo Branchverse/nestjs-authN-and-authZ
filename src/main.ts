@@ -16,7 +16,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Auth Backend')
     .setDescription('User management backend')
-    .setVersion('0.1')
+    .setVersion('0.3')
     .addTag('users')
     .addTag('auth')
     .build()
