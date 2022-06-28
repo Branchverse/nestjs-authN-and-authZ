@@ -46,7 +46,7 @@ jobs:
             .status,
             .registeredAt,
             .registeredBy
-          ) | .containerDefinitions[1].image = ${{ steps.build-image.outputs.uri }}' > task-definition.json
+          ) | .containerDefinitions[0].image = ${{ steps.build-image.outputs.uri }}' > task-definition.json
       - 
         name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
