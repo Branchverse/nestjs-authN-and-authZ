@@ -50,20 +50,11 @@ jobs:
             .registeredBy
           )' > task-definition.json
       - 
-        name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: task-definition.json
-          container-name: test-container
-          image: ${{ steps.build-image.outputs.uri }}
-      - 
         name: Get running Task
         id: get-task
         run: |
           echo "::set-output name=task::$(aws ecs list-tasks --cluster "test-cluster" --query taskArns[0])"
           echo ${{ steps.build-image.outputs.uri }}
-          cat task-definition.json
       - 
         name: Stop running Task
         run: |
