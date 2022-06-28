@@ -37,8 +37,10 @@ jobs:
           echo "::set-output name=uri::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
       - 
         name: Download task definition
+        env: 
+          IMAGE: ${{ steps.build-image.outputs.uri }}
         run: |
-          aws ecs describe-task-definition --task-definition test-task --query taskDefinition | jq -r 'del(
+          aws ecs describe-task-definition --task-definition test-task --query taskDefinition | jq -r --arg IAMGE $IAMGE 'del(
             .taskDefinitionArn,
             .requiresAttributes,
             .compatibilities,
@@ -46,7 +48,7 @@ jobs:
             .status,
             .registeredAt,
             .registeredBy
-          ) | .containerDefinitions[0].image = ${{ steps.build-image.outputs.uri }}' > task-definition.json
+          ) | .containerDefinitions[0].image = $IMAGE' > task-definition.json
       - 
         name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
