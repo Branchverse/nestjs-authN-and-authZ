@@ -47,7 +47,7 @@ This is a repository with a basic user management system using cookies/jwtGuard/
 - [mongoose](https://docs.nestjs.com/recipes/mongodb#mongodb-mongoose)
 - [Rate-limiter](https://docs.nestjs.com/security/rate-limiting)
 
-## Running the app with docker
+## Running the app with docker (known issue with ARM architecture)
 
 Note that I use MongoDB Atlas and not a DB Image (might come later)
 
